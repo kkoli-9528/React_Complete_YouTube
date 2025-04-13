@@ -10,11 +10,22 @@ function App() {
 
   const handleNewItem = (itemName, itemDueDate) => {
     console.log(`New Item Added: ${itemName} Date:${itemDueDate}`);
-    const newTodoItems = [
-      ...todoItems,
-      { name: itemName, dueDate: itemDueDate },
-    ];
-    setTodoItems(newTodoItems);
+
+    // Using spread operator to create a new array with the new item added
+    // and set it to the state variable todoItems
+    // const newTodoItems = [
+    //   ...todoItems,
+    //   { name: itemName, dueDate: itemDueDate },
+    // ];
+    // setTodoItems(newTodoItems);
+
+    // Using functional update to avoid stale closure issue
+    // when using the previous value of a state variable to update it
+    setTodoItems((currentValue) =>
+      [
+        ...currentValue,
+        { name: itemName, dueDate: itemDueDate },
+      ]);
   };
 
   const handleDeleteItem = (todoItemName) => {

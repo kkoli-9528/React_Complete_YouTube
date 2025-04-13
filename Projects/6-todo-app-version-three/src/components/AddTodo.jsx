@@ -1,47 +1,51 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState();
-  const [dueDate, setDueDate] = useState();
+  const todoNameElement = useRef();
+  const dueDateElement = useRef();
 
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
 
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+  const handleAddButtonClicked = (e) => {
+    e.preventDefault();
+    const todoName = todoNameElement.current.value;
+    const dueDateRaw = dueDateElement.current.value;
 
-  const handleAddButtonClicked = () => {
-    onNewItem(todoName, dueDate);
-    setDueDate("");
-    setTodoName("");
+    let formattedDate = "";
+    if (dueDateRaw) {
+      const dateObj = new Date(dueDateRaw);
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+      formattedDate = `${day}-${month}-${year}`;
+    }
+    todoNameElement.current.value = "";
+    dueDateElement.current.value = "";
+    onNewItem(todoName, formattedDate);
   };
 
   return (
     <div className="container text-center">
-      <div className="row kg-row">
+      <form onSubmit={handleAddButtonClicked} className="row kg-row">
         <div className="col-6">
           <input
             type="text"
+            ref={todoNameElement}
             placeholder="Enter Todo Here"
-            value={todoName}
-            onChange={handleNameChange}
+            required
           />
         </div>
         <div className="col-4">
-          <input type="date" value={dueDate} onChange={handleDateChange} />
+          <input type="date" ref={dueDateElement} required />
         </div>
         <div className="col-2">
           <button
-            type="button"
+            type="submit"
             className="btn btn-success kg-button"
-            onClick={handleAddButtonClicked}
           >
             Add
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
