@@ -1,0 +1,9 @@
+.spinnerContainer {
+  margin: 3% auto;
+}
+
+.spinnerBody {
+  height: 50px;
+  width: 50px;
+  --bs-spinner-border-width: 0.35em;
+}
