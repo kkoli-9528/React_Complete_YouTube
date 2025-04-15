@@ -4,12 +4,15 @@ export const PostList = createContext({
   postList: [],
   addPost: () => { },
   deletePost: () => { },
+  addInitialPosts: () => { },
 });
 
 const postListReducer = (currentPostList, action) => {
   let newPostList = currentPostList;
   if (action.type === "DELETE_POST") {
     newPostList = currentPostList.filter((post) => post.id !== action.payload.postId);
+  } else if (action.type === "ADD_INITIAL_POST") {
+    newPostList = action.payload.posts
   } else if (action.type === "ADD_POST") {
     newPostList = [action.payload, ...currentPostList]
   }
@@ -17,7 +20,7 @@ const postListReducer = (currentPostList, action) => {
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(postListReducer, DEFAULT_POST_LIST);
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
   const addPost = ({
     userId,
@@ -32,9 +35,20 @@ const PostListProvider = ({ children }) => {
         id: Date.now(),
         title: postTitle,
         body: postBody,
-        reactions: reactions,
+        reactions: {
+          likes: reactions,
+        },
         userID: userId,
-        tag: tags,
+        tags: tags,
+      }
+    })
+  };
+
+  const addInitialPosts = (posts) => {
+    dispatchPostList({
+      type: "ADD_INITIAL_POST",
+      payload: {
+        posts,
       }
     })
   };
@@ -52,26 +66,12 @@ const PostListProvider = ({ children }) => {
     postList,
     addPost,
     deletePost,
+    addInitialPosts
   }}>
     {children}
   </PostList.Provider>;
 };
 
-const DEFAULT_POST_LIST = [{
-  id: 1,
-  title: "Go To Mumbai",
-  body: "Hi Friends, I am going to Mumbai this weekend. Anyone interested to join me?",
-  reactions: 2,
-  userID: "user-9",
-  tag: ['vacation', 'Mumbai', 'Enjoy']
-},
-{
-  id: 2,
-  title: "Go To Goa",
-  body: "Hi Friends, I am going to Goa this weekend. Anyone interested to join me?",
-  reactions: 15,
-  userID: "user-12",
-  tag: ['vacation', 'Goa', 'Enjoy']
-}];
+
 
 export default PostListProvider;

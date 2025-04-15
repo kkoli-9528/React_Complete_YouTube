@@ -11,7 +11,7 @@ import { useState } from "react";
 
 function App() {
 
-  const [selectedTab, setSelectedTab] = useState("Create Post");
+  const [selectedTab, setSelectedTab] = useState("Home");
 
   return (
     <>
