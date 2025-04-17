@@ -9,18 +9,22 @@ const PostList = () => {
   const { postList, addInitialPosts } = useContext(Pos);
   const [fetching, setFetching] = useState(false);
 
-  // Remove the console logs to understand the flow of the async function
   useEffect(() => {
     setFetching(true);
-    // console.log("fetch started");
     fetch('https://dummyjson.com/posts')
       .then(res => res.json())
       .then(data => {
         addInitialPosts(data.posts);
         setFetching(false);
-        // console.log("fetch returned");
       });
-    // console.log("fetch ended");
+
+    /* 
+    - return in UseEffect() hook is fired when the component is Unmounted from memory.
+    - return can be used as a clean up of any API call or any async action.
+    */
+    return (() => {
+      console.log("Cleaning a UseEffect.");
+    })
   }, []);
 
   return (
