@@ -11,12 +11,20 @@ const PostList = () => {
 
   useEffect(() => {
     setFetching(true);
-    fetch('https://dummyjson.com/posts')
+
+    /*
+    - you can use controller object to abort the api calls or any asyn operations.
+    - returns an signal property and an abort() method, which we can use to abort an asyn action.
+    */
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    fetch('https://dummyjson.com/posts', { signal })
       .then(res => res.json())
       .then(data => {
         addInitialPosts(data.posts);
         setFetching(false);
-      });
+      })
 
     /* 
     - return in UseEffect() hook is fired when the component is Unmounted from memory.
@@ -24,6 +32,7 @@ const PostList = () => {
     */
     return (() => {
       console.log("Cleaning a UseEffect.");
+      controller.abort();
     })
   }, []);
 
