@@ -1,10 +1,10 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useReducer } from "react";
 
 export const PostList = createContext({
   postList: [],
-  addPost: () => {},
-  addInitialPosts: () => {},
-  deletePost: () => {},
+  addPost: () => { },
+  addInitialPosts: () => { },
+  deletePost: () => { },
 });
 
 const postListReducer = (currPostList, action) => {
@@ -38,14 +38,18 @@ const PostListProvider = ({ children }) => {
     });
   };
 
-  const addInitialPosts = (posts) => {
+  /* 
+  - use useCallback() to prevent re-render of the child component due to parent component changes.
+  - note: use on funtions, when prop is passed from a parent compoent to a child component, child component will re-render unnecessarily when the parent component is changed/re-render.
+  */
+  const addInitialPosts = useCallback((posts) => {
     dispatchPostList({
       type: "ADD_INITIAL_POSTS",
       payload: {
         posts,
       },
     });
-  };
+  }, [dispatchPostList]);
 
   const deletePost = (postId) => {
     dispatchPostList({

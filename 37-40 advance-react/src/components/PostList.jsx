@@ -18,6 +18,8 @@ const PostList = () => {
       .then((data) => {
         addInitialPosts(data.posts);
         setFetching(false);
+      }).catch((err) => {
+        console.log(`Error: ${err}`);
       });
 
     return () => {
