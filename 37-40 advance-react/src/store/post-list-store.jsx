@@ -39,7 +39,7 @@ const PostListProvider = ({ children }) => {
   };
 
   /* 
-  - use useCallback() to prevent re-render of the child component due to parent component changes.
+  - use useCallback() to prevent re-render of the child component due to parent component changes, it returns the funtion.
   - note: use on funtions, when prop is passed from a parent compoent to a child component, child component will re-render unnecessarily when the parent component is changed/re-render.
   */
   const addInitialPosts = useCallback((posts) => {
