@@ -1,4 +1,4 @@
-import { createContext, useCallback, useReducer } from "react";
+import { createContext, useCallback, useMemo, useReducer } from "react";
 
 export const PostList = createContext({
   postList: [],
@@ -59,6 +59,11 @@ const PostListProvider = ({ children }) => {
       },
     });
   };
+
+  // assume the array is comming from a prop.
+  // useMemo will only compute the said calculation and return value when the arr is changed.
+  const arr = [5, 2, 4, 6, 1];
+  const sortArr = useMemo(() => arr.sort(), [arr]);
 
   return (
     <PostList.Provider
