@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { PostList } from "../store/post-list-store";

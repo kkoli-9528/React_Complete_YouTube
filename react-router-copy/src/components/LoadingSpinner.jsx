@@ -1,3 +1,4 @@
+import React from "react";
 const LoadingSpinner = () => {
   return (
     <div className="d-flex justify-content-center spinner">

@@ -1,3 +1,4 @@
+import React from "react";
 const WelcomeMessage = ({ onGetPostsClick }) => {
   return (
     <center className="welcome-message">
