@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Sidebar = () => {
   return (
     <div
@@ -18,8 +20,8 @@ const Sidebar = () => {
         <li
           className="nav-item"
         >
-          <a
-            href="/"
+          <Link
+            to="/"
             className={`nav-link text-white`}
             aria-current="page"
           >
@@ -27,18 +29,18 @@ const Sidebar = () => {
               <use xlinkHref="#home"></use>
             </svg>
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a
-            href="/create-post"
+          <Link
+            to="/create-post"
             className={`nav-link text-white`}
           >
             <svg className="bi pe-none me-2" width="16" height="16">
               <use xlinkHref="#speedometer2"></use>
             </svg>
             Create Post
-          </a>
+          </Link>
         </li>
       </ul>
       <hr />
