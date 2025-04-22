@@ -1,39 +1,32 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { counterActions, privacyActions } from "../store";
 
 const Controls = () => {
   const dispatch = useDispatch();
   const inputElement = useRef();
 
   const handleIncrement = () => {
-    dispatch({ type: "INCREMENT" })
+    console.log("increment called");
+    dispatch(counterActions.increment());
   };
 
   const handleDecrement = () => {
-    dispatch({ type: "DECREMENT" })
+    console.log("decrement called");
+    dispatch(counterActions.decrement());
   };
 
   const handlePrivacyToggle = () => {
-    dispatch({ type: "PRIVACY_TOGGLE" })
+    dispatch(privacyActions.toggle());
   };
 
   const handleAdd = () => {
-    dispatch({
-      type: "ADDITION",
-      payload: {
-        num: inputElement.current.value,
-      },
-    });
+    dispatch(counterActions.add(inputElement.current.value));
     inputElement.current.value = "";
   };
 
   const handleSubstract = () => {
-    dispatch({
-      type: "SUBSTRACT",
-      payload: {
-        num: inputElement.current.value,
-      },
-    });
+    dispatch(counterActions.substract(inputElement.current.value));
     inputElement.current.value = "";
   };
 
